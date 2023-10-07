@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex justify-center items-center w-full h-20 overflow-hidden">
+    <div className="flex justify-center items-center w-full h-20 overflow-hidden flex-shrink-0">
       <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 w-full max-w-7xl overflow-hidden">
         <div className="w-fit flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden px-5 bg-primary-100 text-4xl text-white">
           Study With Me

@@ -14,7 +14,7 @@ const SignUp = () => {
   const [samePassword, setSamePassword] = useState<number>(0);
 
   const dispatch = useAppDispatch();
-  const member = useAppSelector(select => select.auth);
+  const auth = useAppSelector(state => state.auth);
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
@@ -133,7 +133,7 @@ const SignUp = () => {
             </label>
             <textarea id="introduce" name="introduce" className="w-full flex justify-start items-center flex-grow-0 flex-shrink-0 overflow-auto px-2.5 py-1 border-primary-100 border-2 rounded-xl"></textarea>
           </div>
-          {member.status == "loading" ? <Button size="lg" disabled><CgSpinner className="animate-spin text-3xl" /></Button> : <Button size="lg">회원가입</Button>}
+          {auth.status == "loading" ? <Button size="lg" disabled><CgSpinner className="animate-spin text-3xl" /></Button> : <Button size="lg">회원가입</Button>}
         </form>
       </div>
     </div>
