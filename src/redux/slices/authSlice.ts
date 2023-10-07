@@ -7,8 +7,8 @@ interface authState {
   data: Member,
 }
 
-const initialState : authState = {
-  status: 'logout',
+const initialState: authState = {
+  status: 'login',
   data: {
     memberId: 0,
     email: "",
@@ -17,8 +17,8 @@ const initialState : authState = {
   }
 }
 
-export const signUp = createAsyncThunk('signup', async (data : FormData)=>{
-  const signUpData : Member = {
+export const signUp = createAsyncThunk('signup', async (data: FormData) => {
+  const signUpData: Member = {
     memberId: 0,
     email: data.get("email") as string,
     password: data.get("pw") as string,
@@ -37,21 +37,53 @@ export const signUp = createAsyncThunk('signup', async (data : FormData)=>{
   // return {...signUpData, memberId:memberData.memberId};
 });
 
+export const signIn = createAsyncThunk('signin', async (data: FormData) => {
+  const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/login`, {
+    email: data.get("email"),
+    password: data.get("password"),
+  })).data();
+
+  return memberData;
+})
+
+export const kakaoLogin = createAsyncThunk('kakaoLogin', async (data:Member) => {
+  const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialLogin`, {
+    loginType: "kakao",
+    oauthId: data
+  })).data();
+
+  return memberData;
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
-  extraReducers: (builder)=>{
-    builder.addCase(signUp.fulfilled, (state, action)=>{
+  extraReducers: (builder) => {
+    builder.addCase(signUp.fulfilled, (state, action) => {
       state.status = "login";
       state.data = action.payload;
     }),
-    builder.addCase(signUp.pending, (state)=>{
-      state.status = "loading";
-    }),
-    builder.addCase(signUp.rejected, (state)=>{
-      state = initialState;
-    })
+      builder.addCase(signUp.pending, (state) => {
+        state.status = "loading";
+      }),
+      builder.addCase(signUp.rejected, (state) => {
+        state = initialState;
+      }),
+      builder.addCase(signIn.fulfilled, (state, action) => {
+        state.status = "login";
+        state.data = action.payload;
+      }),
+      builder.addCase(signIn.pending, (state)=>{
+        state.status = "loading";
+      }),
+      builder.addCase(kakaoLogin.fulfilled, (state, action)=>{
+        state.status = "login";
+        state.data = action.payload;
+      }),
+      builder.addCase(kakaoLogin.pending, (state)=>{
+        state.status="loading";
+      })
   }
 })
 
