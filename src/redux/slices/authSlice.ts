@@ -8,7 +8,7 @@ interface authState {
 }
 
 const initialState: authState = {
-  status: 'login',
+  status: 'logout',
   data: {
     memberId: 0,
     email: "",
@@ -38,15 +38,22 @@ export const signUp = createAsyncThunk('signup', async (data: FormData) => {
 });
 
 export const signIn = createAsyncThunk('signin', async (data: FormData) => {
-  const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/login`, {
-    email: data.get("email"),
-    password: data.get("password"),
-  })).data();
+  // const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/login`, {
+  //   email: data.get("email"),
+  //   password: data.get("password"),
+  // })).data();
+
+  const memberData: Member = {
+    memberId: 1111,
+    email: "test",
+    name: "",
+    nickname: "test",
+  }
 
   return memberData;
 })
 
-export const kakaoLogin = createAsyncThunk('kakaoLogin', async (data:Member) => {
+export const kakaoLogin = createAsyncThunk('kakaoLogin', async (data: Member) => {
   const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialLogin`, {
     loginType: "kakao",
     oauthId: data
@@ -71,18 +78,24 @@ const authSlice = createSlice({
         state = initialState;
       }),
       builder.addCase(signIn.fulfilled, (state, action) => {
-        state.status = "login";
-        state.data = action.payload;
+        if ((action.payload as Member).name === "") state.status = "logout";
+        else {
+          state.status = "login";
+          state.data = action.payload;
+        }
       }),
-      builder.addCase(signIn.pending, (state)=>{
+      builder.addCase(signIn.pending, (state) => {
         state.status = "loading";
       }),
-      builder.addCase(kakaoLogin.fulfilled, (state, action)=>{
-        state.status = "login";
-        state.data = action.payload;
+      builder.addCase(kakaoLogin.fulfilled, (state, action) => {
+        if ((action.payload as Member).name === "") state.status = "logout";
+        else {
+          state.status = "login";
+          state.data = action.payload;
+        }
       }),
-      builder.addCase(kakaoLogin.pending, (state)=>{
-        state.status="loading";
+      builder.addCase(kakaoLogin.pending, (state) => {
+        state.status = "loading";
       })
   }
 })
