@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import FilterButton from "@/components/FilterButton";
 import CardList from "@/components/CardList";
-import LoadingPage from "@/loading";
+import LoadingPage from "../loading";
 import CardSearch from "@/components/CardSearch";
 import CardPagination from "@/components/CardPagination";
 
