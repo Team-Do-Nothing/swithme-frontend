@@ -16,7 +16,6 @@ interface Group {
 interface CardSearchProps {
     getCardResults: (group: Group[]) => void;
 }
-
 const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     const [query, setQuery] = useState('');
 
@@ -32,22 +31,25 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex w-full items-center">
+        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row w-full items-center gap-2">
             <input type="text"
                    placeholder="관심 스터디를 검색해보세요!"
-                   className="p-2 rounded border shadow-md flex-grow mr-6"
+                   className="p-2 rounded border shadow-md flex-8 w-full"
                    value={query}
                    onChange={(e) => setQuery(e.target.value)}
             />
-            <FilterButton
-                bgColor="bg-green-500"
-                hoverColor="hover:bg-green-600"
-                rounded="rounded-xl"
-                text="text-gray-50">
-                검색
-            </FilterButton>
+            <div className="flex gap-3">
+                <button
+                    className="bg-green-500 hover:bg-green-600 rounded-xl text-gray-50 py-1 sm:py-2 lg:py-3 px-2 sm:px-4 lg:px-8 border border-gray-400 font-semibold transition w-full md:w-auto whitespace-nowrap">
+                    검색
+                </button>
+                <button
+                    className="bg-gray-500 hover:bg-green-600 rounded-xl text-gray-50 py-1 sm:py-2 lg:py-3 px-2 sm:px-4 lg:px-6 border border-gray-400 font-semibold transition w-full md:w-auto whitespace-nowrap">
+                    초기화
+                </button>
+            </div>
         </form>
-
     );
 };
+
 export default CardSearch;
