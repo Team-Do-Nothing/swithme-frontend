@@ -68,8 +68,11 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(signUp.fulfilled, (state, action) => {
-      state.status = "login";
-      state.data = action.payload;
+      if (action.payload.memberId === undefined) state.status = "logout";
+      else {
+        state.status = "signUp";
+        state.data = action.payload;
+      }
     }),
       builder.addCase(signUp.pending, (state) => {
         state.status = "loading";
@@ -78,7 +81,7 @@ const authSlice = createSlice({
         state = initialState;
       }),
       builder.addCase(signIn.fulfilled, (state, action) => {
-        if ((action.payload as Member).name === "") state.status = "logout";
+        if (action.payload.name === "") state.status = "logout";
         else {
           state.status = "login";
           state.data = action.payload;
@@ -88,7 +91,7 @@ const authSlice = createSlice({
         state.status = "loading";
       }),
       builder.addCase(kakaoLogin.fulfilled, (state, action) => {
-        if ((action.payload as Member).name === "") state.status = "logout";
+        if (action.payload.name === "") state.status = "logout";
         else {
           state.status = "login";
           state.data = action.payload;
