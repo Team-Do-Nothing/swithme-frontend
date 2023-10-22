@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import MyGroupNavBar from "@/components/MyGroup/MyGroupNavBar";
 
 const BoardPage = () => {
     return (
-        <div>BoardPage</div>
-    )
-}
-export default BoardPage
+        <>
+            <h1>BoardPage</h1>
+            <MyGroupNavBar></MyGroupNavBar>
+        </>
+    );
+};
+export default BoardPage;

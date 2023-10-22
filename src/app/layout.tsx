@@ -1,4 +1,4 @@
-import { Nunito } from 'next/font/google'
+import {Nunito} from 'next/font/google'
 
 import Header from '@/components/Header'
 import './globals.css'
@@ -16,21 +16,19 @@ const font = Nunito({
     subsets: ['latin'],
 });
 
-export default function RootLayout({
-                                       children,
-                                   }: {
+export default function RootLayout({children,}: {
     children: React.ReactNode
 }) {
     return (
         <html lang="en">
-            <body className={font.className}>
-                <ReduxProvider>
-                    <Header/>
-                    <div className="px-0 lg:px-40 2xl:px-80 py-24">
-                        {children}
-                    </div>
-                </ReduxProvider>
-            </body>
+        <body className={font.className}>
+        <ReduxProvider>
+            <Header/>
+            <div className="px-0 lg:px-40 2xl:px-80 py-24">
+                {children}
+            </div>
+        </ReduxProvider>
+        </body>
         </html>
     )
 }
