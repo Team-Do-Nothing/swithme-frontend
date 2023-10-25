@@ -1,3 +1,4 @@
+import { Member } from "@/redux/interface";
 import axios from "axios";
 
 interface KakaoAccessToken {
@@ -26,10 +27,19 @@ export const POST = async (request: Request) => {
     }
   })).data;
 
-  const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}`,{
-    loginType:'kakao',
-    oauthId:tokenData.access_token,
-  })).data;
+  // const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialLogin`,{
+  //   loginType:'kakao',
+  //   oauthId:tokenData.access_token,
+  // })).data;
+
+  console.log(tokenData);
+
+  const memberData: Member = {
+    memberId: 1111,
+    email: "test",
+    name: "",
+    nickname: "test",
+  }
 
   return Response.json(memberData);
 }

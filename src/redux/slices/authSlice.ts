@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Member } from "../interface";
 import axios from "axios";
 
+export const DEFAULT_NICKNAME = "test"
+
 interface authState {
   status: string,
   data: Member,
@@ -53,11 +55,15 @@ export const signIn = createAsyncThunk('signin', async (data: FormData) => {
   return memberData;
 })
 
-export const kakaoLogin = createAsyncThunk('kakaoLogin', async (data: Member) => {
-  const memberData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialLogin`, {
-    loginType: "kakao",
-    oauthId: data
-  })).data();
+export const kakaoLogin = createAsyncThunk('kakaoLogin', async (code: string) => {
+  // const memberData = await (await axios.post(`/signin/social/kakao/api`, { code })).data();
+
+  const memberData: Member = {
+    memberId: 1111,
+    email: "test",
+    name: "",
+    nickname: "test",
+  }
 
   return memberData;
 })
@@ -91,11 +97,8 @@ const authSlice = createSlice({
         state.status = "loading";
       }),
       builder.addCase(kakaoLogin.fulfilled, (state, action) => {
-        if (action.payload.name === "") state.status = "logout";
-        else {
-          state.status = "login";
-          state.data = action.payload;
-        }
+        state.status = action.payload.nickname === DEFAULT_NICKNAME ? "logout" : "login"
+        state.data = action.payload;
       }),
       builder.addCase(kakaoLogin.pending, (state) => {
         state.status = "loading";
