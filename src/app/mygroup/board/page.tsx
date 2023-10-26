@@ -1,11 +1,11 @@
 import React from 'react';
-import MyGroupNavBar from "@/components/MyGroup/MyGroupNavBar";
+import MyGroupHeader from "@/components/MyGroup/MyGroupHeader";
 
 const BoardPage = () => {
     return (
         <>
+            <MyGroupHeader />
             <h1>BoardPage</h1>
-            <MyGroupNavBar></MyGroupNavBar>
         </>
     );
 };

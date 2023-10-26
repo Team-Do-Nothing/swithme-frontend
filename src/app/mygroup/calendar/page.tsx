@@ -1,8 +1,12 @@
 import React from 'react';
+import MyGroupHeader from "@/components/MyGroup/MyGroupHeader";
 
 const CalendarPage = () => {
     return (
-        <div>CalendarPage</div>
+        <>
+            <MyGroupHeader />
+            <div>CalendarPage</div>
+        </>
     );
 };
 export default CalendarPage;

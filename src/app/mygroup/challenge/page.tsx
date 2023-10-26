@@ -1,8 +1,12 @@
 import React from 'react'
+import MyGroupHeader from "@/components/MyGroup/MyGroupHeader";
 
 const ChallengePage = () => {
     return (
-        <div>ChallengePage</div>
+        <>
+            <MyGroupHeader />
+            <div>ChallengePage</div>
+        </>
     )
 }
 export default ChallengePage

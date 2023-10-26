@@ -1,8 +1,12 @@
 import React from 'react';
+import MyGroupHeader from "@/components/MyGroup/MyGroupHeader";
 
 const MemberPage = () => {
     return (
-        <div>MemberPage</div>
+        <>
+            <MyGroupHeader />
+            <div>MemberPage</div>
+        </>
     );
 };
 export default MemberPage;
