@@ -168,8 +168,8 @@ const SignUpForm = () => {
 
 const SignUpSuccess = () => {
   return (
-    <div className=" w-full max-w-3xl flex flex-col justify-center items-center flex-grow overflow-hidden gap-2.5 p-5 rounded-3xl border-2 border-[#58c179]">
-      <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2.5 p-2.5 border-t-0 border-r-0 border-b border-l-0 border-[#58c179]">
+    <div className=" w-full max-w-3xl flex flex-col justify-center items-center flex-grow overflow-hidden gap-2.5 p-5 rounded-3xl border-2 border-primary-100">
+      <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2.5 p-2.5 border-t-0 border-r-0 border-b border-l-0 border-primary-100">
         <p className="flex-grow-0 flex-shrink-0 text-xl font-semibold text-left text-black">
           <span className="flex-grow-0 flex-shrink-0 text-xl font-semibold text-left text-black">
             회원가입이 완료되었습니다!
