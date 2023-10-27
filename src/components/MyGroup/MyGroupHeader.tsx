@@ -1,7 +1,8 @@
 import React from 'react'
-import {Heart2Button} from "@/components/MyGroup/Heart2Button";
 import {DropdownCloseButton} from "@/components/MyGroup/DropDownCloseButton";
 import MyGroupNavBar from "@/components/MyGroup/MyGroupNavBar";
+import {BiChevronDown} from "react-icons/bi";
+import {Heart2Button} from "@/components/MyGroup/Heart2Button";
 
 const MyGroupHeader = () => {
     return (
@@ -38,10 +39,8 @@ const MyGroupHeader = () => {
                 </div>
                 <div
                     className="inline-flex items-center justify-center gap-[10px] p-[10px] relative self-stretch flex-[0_0_auto]">
-                    <Heart2Button/>
-                    <div className="!flex-[0_0_auto]">
-                        <DropdownCloseButton text="모집 중"/>
-                    </div>
+                    <Heart2Button />
+                    <DropdownCloseButton text="모집중" />
                 </div>
             </div>
             <MyGroupNavBar/>
