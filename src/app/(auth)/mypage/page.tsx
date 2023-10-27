@@ -1,6 +1,22 @@
+'use client'
+
+import { useAppSelector } from "@/redux/store";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
 const UserDataPage = () => {
+
+  const auth = useAppSelector((state)=>state.auth);
+  const member = auth.data;
+  const router = useRouter();
+
+  useEffect(()=>{
+    const status = auth.status;
+
+    if(status!=="login")  router.push("/");
+  }, [])
+
   return (
     <div className="flex flex-col justify-start items-start self-stretch flex-grow overflow-hidden gap-2.5 p-2.5">
       <div className="grid grid-cols-[150px,1fr] gap-y-5 justify-center items-start self-stretch flex-grow-0 flex-shrink-0 overflow-hidden gap-2.5 p-2.5 rounded-xl border-2 border-[#58c179]">
@@ -8,31 +24,31 @@ const UserDataPage = () => {
           <FaUserCircle className="text-8xl" />
         </div>
         <div className="h-full flex items-center flex-grow-0 flex-shrink-0 text-[32px] font-semibold text-black">
-          User1
+          {member.nickname}
         </div>
         <div className="flex-grow-0 flex-shrink-0 text-[22px] font-semibold text-center text-black border-r-2 border-text-300">
           성별
         </div>
         <div className="flex-grow-0 flex-shrink-0 text-[22px] font-semibold text-left text-black">
-          남성
+          {member.gender==='M' ? '남성' : '여성'}
         </div>
         <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 w-[150px] relative overflow-hidden gap-2.5 p-2.5 border-r-2 border-text-300 text-xl font-semibold">
           연락처
         </div>
         <div className="h-full flex justify-start items-center flex-grow-0 flex-shrink-0 text-[22px] font-semibold text-black">
-          010-1234-1234
+          {member.phone}
         </div>
         <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 w-[150px] relative overflow-hidden gap-2.5 p-2.5 border-r-2 border-text-300 text-xl font-semibold">
           생년월일
         </div>
         <div className="h-full flex justify-start items-center flex-grow-0 flex-shrink-0 text-[22px] font-semibold text-black">
-          1990-01-01
+          {member.birthdate}
         </div>
         <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 w-[150px] relative overflow-hidden gap-2.5 p-2.5 border-r-2 border-text-300 text-xl font-semibold">
           자기소개
         </div>
         <div className="h-full flex justify-start items-center flex-grow-0 flex-shrink-0 text-[22px] font-semibold text-black">
-          하나! 둘! 셋! 야!
+          {member.introduce}
         </div>
       </div>
       <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 overflow-hidden gap-2.5 p-2.5 rounded-xl border-2 border-primary-100">
