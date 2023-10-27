@@ -20,16 +20,16 @@ interface SocialSignUpData {
 }
 
 const initialState: authState = {
-  status: 'login',
+  status: 'logout',
   data: {
-    memberId: 1,
+    memberId: -1,
     email: "",
     name: "",
-    nickname: "test",
-    phone: "010-1234-1234",
-    birthdate: '1990-01-01',
-    introduce: '하나! 둘! 셋! 야!',
-    gender: 'M',
+    nickname: "",
+    phone: "",
+    birthdate: '',
+    introduce: '',
+    gender: '',
   }
 }
 
@@ -94,6 +94,12 @@ export const updateMemberInfo = createAsyncThunk('updateMemberInfo', async (data
   return data;
 })
 
+export const deleteMember = createAsyncThunk('deleteMember', async ({memberId, password}: {memberId:number, password:string}) => {
+  const response = (await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URI}/member/deleteMember?memberId=${memberId}&password=${password}`)).status;
+
+  return response;
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -144,6 +150,9 @@ const authSlice = createSlice({
           ...state.data,
           ...action.payload,
         }
+      }),
+      builder.addCase(deleteMember.fulfilled, (state)=>{
+        state = initialState;
       })
   }
 })

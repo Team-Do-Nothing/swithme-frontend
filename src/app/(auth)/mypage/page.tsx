@@ -2,11 +2,12 @@
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { updateMemberInfo } from "@/redux/slices/authSlice";
+import { deleteMember, updateMemberInfo } from "@/redux/slices/authSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 
 const DataRow = ({ title, value }: { title: string, value: string }) => {
   return (
@@ -31,12 +32,12 @@ const UserData = () => {
 
   const handleUpdate = () => {
     const data = {
-      memberId : member.memberId,
+      memberId: member.memberId,
       phone,
       introduce,
     };
 
-    dispatch(updateMemberInfo(data)).then(_=>{
+    dispatch(updateMemberInfo(data)).then(_ => {
       setIsUpdate(false);
     });
   }
@@ -58,11 +59,11 @@ const UserData = () => {
             <div className="flex-grow-0 flex-shrink-0 text-xl font-semibold text-center text-black border-r-2 border-text-300">
               연락처
             </div>
-            <Input className="w-full text-xl font-semibold" value={phone} onChange={(e)=>{setPhone(e.currentTarget.value)}}/>
+            <Input className="w-full text-xl font-semibold" value={phone} onChange={(e) => { setPhone(e.currentTarget.value) }} />
             <div className="flex-grow-0 flex-shrink-0 text-xl font-semibold text-center text-black border-r-2 border-text-300">
               자기소개
             </div>
-            <textarea className="rounded-xl border-2 border-primary-100 px-2 py-1 text-xl font-semibold" value={introduce} onChange={(e)=>{setIntroduce(e.target.value)}}/>
+            <textarea className="rounded-xl border-2 border-primary-100 px-2 py-1 text-xl font-semibold" value={introduce} onChange={(e) => { setIntroduce(e.target.value) }} />
           </>
         ) : (
           <>
@@ -86,7 +87,18 @@ const UserData = () => {
 const UserInfoPage = () => {
 
   const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+
+  const handleDelete : FormEventHandler = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const memberId = auth.data.memberId;
+    const password = formData.get("password") as string;
+    dispatch(deleteMember({memberId, password}));
+  }
 
   useEffect(() => {
     const status = auth.status;
@@ -109,12 +121,24 @@ const UserInfoPage = () => {
           사용 이력 보기
         </div>
       </div>
-      <div className="flex flex-col justify-center items-start self-stretch flex-grow-0 flex-shrink-0 overflow-hidden gap-2.5 p-2.5 rounded-xl border border-error-100">
-        <div className="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2.5 px-5 py-2.5 font-semibold text-left text-error-100 text-xl">
+      {isDelete ? (
+        <form onSubmit={handleDelete} className="flex h-fit justify-center gap-2.5 px-5 py-2.5 rounded-xl border border-error-100 font-semibold text-left text-error-100 text-xl">
+          회원 탈퇴를 원하시면 비밀번호를 입력해주세요.
+          <input name="password" className="border-error-100 border-2 focus:outline-none rounded-lg px-2 py-1"/>
+          <button className="bg-white border-2 border-error-100 rounded-xl px-2 py-1 hover:bg-error-100 hover:text-white">회원 탈퇴</button>
+          <button className="text-white rounded-xl bg-gray-400 hover:bg-gray-500 px-2 py-1" onClick={(e)=>{e.preventDefault(); setIsDelete(false)}}><AiOutlineClose/></button>
+        </form>
+      ) : (
+        <div
+          className="px-5 py-2.5 rounded-xl border border-error-100 font-semibold text-left text-error-100 text-xl cursor-pointer"
+          onClick={() => { setIsDelete(true) }}
+        >
           회원 탈퇴
         </div>
-      </div>
-    </div>
+      )
+      }
+
+    </div >
   )
 }
 
