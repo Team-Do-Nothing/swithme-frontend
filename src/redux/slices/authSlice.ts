@@ -20,12 +20,16 @@ interface SocialSignUpData {
 }
 
 const initialState: authState = {
-  status: 'logout',
+  status: 'login',
   data: {
-    memberId: 0,
+    memberId: 1,
     email: "",
     name: "",
-    nickname: "",
+    nickname: "test",
+    phone: "010-1234-1234",
+    birthdate: '1990-01-01',
+    introduce: '하나! 둘! 셋! 야!',
+    gender: 'M',
   }
 }
 
@@ -78,10 +82,16 @@ export const kakaoLogin = createAsyncThunk('kakaoLogin', async (code: string) =>
   return memberData;
 })
 
-export const kakaoSignUp = createAsyncThunk('kakaoSignup', async (data : SocialSignUpData) => {
+export const kakaoSignUp = createAsyncThunk('kakaoSignup', async (data: SocialSignUpData) => {
   const userData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialSignup`, data)).data;
 
   return userData;
+})
+
+export const updateMemberInfo = createAsyncThunk('updateMemberInfo', async (data: { memberId: number, phone: string, introduce: string }) => {
+  // const response = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/member/updateMember`, data)).data;
+
+  return data;
 })
 
 const authSlice = createSlice({
@@ -119,14 +129,20 @@ const authSlice = createSlice({
       builder.addCase(kakaoLogin.pending, (state) => {
         state.status = "loading";
       }),
-      builder.addCase(kakaoSignUp.pending, (state)=>{
+      builder.addCase(kakaoSignUp.pending, (state) => {
         state.status = "loading";
       }),
-      builder.addCase(kakaoSignUp.fulfilled, (state, action)=>{
-        if(action.payload.memberId===-1) state.status == "logout";
+      builder.addCase(kakaoSignUp.fulfilled, (state, action) => {
+        if (action.payload.memberId === -1) state.status == "logout";
         else {
           state.status = "login"
           state.data = action.payload;
+        }
+      }),
+      builder.addCase(updateMemberInfo.fulfilled, (state, action) => {
+        state.data = {
+          ...state.data,
+          ...action.payload,
         }
       })
   }
