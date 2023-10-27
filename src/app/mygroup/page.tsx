@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 
 import CardList from "@/components/CardList";
 import LoadingPage from "@/app/loading";
+import Link from "next/link";
+import Card from "@/components/Card";
 
 interface Group {
     study_id: string;
@@ -37,7 +39,15 @@ const MyGroupPage = () => {
 
     return (
         <>
-            <CardList groups={groups} />
+            <ul>
+                {groups.map((group)=>(
+                    <li key={group.study_id}>
+                        <Link href={`/mygroup/${group.study_id}/notice`}>
+                            <Card params={group} />
+                        </Link>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 };
