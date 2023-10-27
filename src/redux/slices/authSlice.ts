@@ -9,6 +9,16 @@ interface authState {
   data: Member,
 }
 
+interface SocialSignUpData {
+  oauthId: string,
+  name: string,
+  nickname: string,
+  gender: string,
+  birthdate: string,
+  phone: string,
+  introduce: string,
+}
+
 const initialState: authState = {
   status: 'logout',
   data: {
@@ -68,6 +78,12 @@ export const kakaoLogin = createAsyncThunk('kakaoLogin', async (code: string) =>
   return memberData;
 })
 
+export const kakaoSignUp = createAsyncThunk('kakaoSignup', async (data : SocialSignUpData) => {
+  const userData = (await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/auth/socialSignup`, data)).data;
+
+  return userData;
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -102,6 +118,16 @@ const authSlice = createSlice({
       }),
       builder.addCase(kakaoLogin.pending, (state) => {
         state.status = "loading";
+      }),
+      builder.addCase(kakaoSignUp.pending, (state)=>{
+        state.status = "loading";
+      }),
+      builder.addCase(kakaoSignUp.fulfilled, (state, action)=>{
+        if(action.payload.memberId===-1) state.status == "logout";
+        else {
+          state.status = "login"
+          state.data = action.payload;
+        }
       })
   }
 })
