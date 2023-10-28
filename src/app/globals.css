@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+    .all-\[unset\] {
+        all: unset;
+    }
+}
+
+:root {
+    --variable-collection-primary: rgba(88, 193, 121, 1);
+    --variable-collection-primary-hover: rgba(85, 210, 124, 1);
+    --variable-collection-secondary: rgba(134, 193, 88, 1);
+    --variable-collection-tertiary: var(--variable-collection-third);
+    --variable-collection-text-1: rgba(0, 0, 0, 1);
+    --variable-collection-text-2: rgba(153, 153, 153, 1);
+    --variable-collection-text-3: rgba(217, 217, 217, 1);
+    --variable-collection-third: rgba(212, 194, 97, 1);
+}
+
 html,
 body,
 :root {

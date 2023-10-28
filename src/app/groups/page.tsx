@@ -40,14 +40,12 @@ const GroupsPage = () => {
 
     return (
         <>
-            <div className="flex flex-col justify-center p-4 md:p-8 border-b gap-4">
-
+            <div className="flex flex-col justify-center border-b gap-4">
                 <div className=" gap-4 sm:gap-8 flex pb-2 border-b-[2px] border-gray-300">
                     {['전체', '모집 중', '모집 완료'].map(label => (
                         <span key={label} className="cursor-pointer hover:font-bold">{label}</span>
                     ))}
                 </div>
-
                 <div className="flex mt-4">
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-between w-full">
                         <div className="flex items-center gap-2 flex-grow">
@@ -64,14 +62,9 @@ const GroupsPage = () => {
                         </div>
                     </div>
                 </div>
-
-
                 <CardSearch getCardResults={(results)=>setGroups(results)}/>
-
             </div>
-
             <CardList groups={groups}/>
-
             <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
         </>
     );

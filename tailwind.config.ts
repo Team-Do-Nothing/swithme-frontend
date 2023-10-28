@@ -14,6 +14,15 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        "variable-collection-primary": "var(--variable-collection-primary)",
+        "variable-collection-primary-hover": "var(--variable-collection-primary-hover)",
+        "variable-collection-secondary": "var(--variable-collection-secondary)",
+        "variable-collection-tertiary": "var(--variable-collection-tertiary)",
+        "variable-collection-text-1": "var(--variable-collection-text-1)",
+        "variable-collection-text-2": "var(--variable-collection-text-2)",
+        "variable-collection-text-3": "var(--variable-collection-text-3)",
+      },
     },
     colors: {
       gray : colors.gray,
