@@ -8,7 +8,7 @@ import CardPagination from "@/components/CardPagination";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 
-interface NoticeCardProps {
+interface NoticesProps {
     noticeId: number;
     title: string;
     content: string;
@@ -18,45 +18,43 @@ interface NoticeCardProps {
 }
 
 const NoticePage = () => {
-    const [notices, setNotices] = useState<NoticeCardProps[]>([]);
+    const [notices, setNotices] = useState<NoticesProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const maxPage = 20;
     const pathname = usePathname();
 
-    useEffect(()=>{
-        const fetchGroups = async () => {
+    useEffect(() => {
+        const fetchNotices = async () => {
             const res = await fetch('/api/mygroup/notice');
             const data = await res.json();
-            console.log(data);
             setNotices(data);
             setLoading(false);
         }
 
-        fetchGroups();
+        fetchNotices();
     }, []);
 
-    if(loading){
-        return <LoadingPage />;
+    if (loading) {
+        return <LoadingPage/>;
     }
 
     return (
         <>
-            <MyGroupHeader />
+            <MyGroupHeader/>
             <div className="flex flex-col items-center gap-[5px] relative">
                 <div className="flex flex-col items-center gap-[10px] relative flex-1 self-stretch w-full grow">
                     <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
                         <ul className="list-none w-full p-0 m-0">
-                            {notices.map((notice)=>(
+                            {notices.map((notice) => (
                                 <li key={notice.noticeId} className="mb-4 last:mb-0">
                                     <Link href={`${pathname}/${notice.noticeId}`}>
-                                        <NoticeCard params={notice} />
+                                        <NoticeCard params={notice}/>
                                     </Link>
                                 </li>
                             ))}
                         </ul>
                         <div className="flex items-center justify-between p-[10px] relative self-stretch w-full flex-[0_0_auto]">
-                            <div className="relative flex-[0_0_auto]" />
                             <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
                             <button className="inline-flex flex-col items-center justify-center gap-[10px] px-[10px] py-[5px] relative bg-variable-collection-primary rounded-[12px] overflow-hidden all-[unset] box-border">
                                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-white text-[14px] tracking-[0] leading-[24px] whitespace-nowrap">
