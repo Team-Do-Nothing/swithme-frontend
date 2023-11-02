@@ -45,6 +45,9 @@ const config: Config = {
         '200' : '#999999',
         '300' : '#d9d9d9',
       },
+      'error' : {
+        '100' : '#FF0000'
+      }
     }
   },
   plugins: [],

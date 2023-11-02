@@ -1,13 +1,14 @@
 export interface Member {
   memberId: number,
   email: string,
+  password?: string,
   name: string,
   nickname: string,
   gender?: string,
   birthdate?: string,
   phone?: string,
   introduce?: string,
-  temperature: number
+  temperature?: number
 }
 
 export interface Comment {
