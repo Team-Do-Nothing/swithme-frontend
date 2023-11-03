@@ -1,9 +1,12 @@
 'use client';
+
 import React, {useEffect, useState} from 'react';
-import CardList from "@/components/CardList";
+
 import LoadingPage from "../loading";
 import CardSearch from "@/components/CardSearch";
 import CardPagination from "@/components/CardPagination";
+import Link from "next/link";
+import Card from "@/components/Card";
 
 interface Group {
     study_id: string;
@@ -47,7 +50,15 @@ const GroupsPage = () => {
                 </div>
                 <CardSearch getCardResults={(results)=>setGroups(results)}/>
             </div>
-            <CardList groups={groups}/>
+            <ul>
+                {groups.map((group)=>(
+                    <li key={group.study_id}>
+                        <Link href={`/groups/${group.study_id}`}>
+                            <Card params={group} />
+                        </Link>
+                    </li>
+                ))}
+            </ul>
             <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
         </>
     );

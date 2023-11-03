@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from 'react';
 
-import CardList from "@/components/CardList";
 import LoadingPage from "@/app/loading";
 import Link from "next/link";
 import Card from "@/components/Card";
