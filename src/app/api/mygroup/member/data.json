@@ -1,0 +1,24 @@
+[
+  {
+    "memberId":1,
+    "name":"user01",
+    "temperature":36.5,
+    "birthdate":"1990-01-01",
+    "gender":"M",
+    "introduce":"이거슨 자기소개 글임당"
+  },{
+    "memberId":2,
+    "name":"user02",
+    "temperature":48.5,
+    "birthdate":"1999-01-01",
+    "gender":"M",
+    "introduce":"이거슨 자기소개 글임당2222"
+  },{
+    "memberId":3,
+    "name":"user03",
+    "temperature":40.5,
+    "birthdate":"2000-01-01",
+    "gender":"M",
+    "introduce":"이거슨 자기소개 글임당3333"
+  }
+]
