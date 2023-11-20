@@ -7,6 +7,7 @@ import CardSearch from "@/components/CardSearch";
 import CardPagination from "@/components/CardPagination";
 import Link from "next/link";
 import Card from "@/components/Card";
+import CardFilter from "@/components/CardFilter";
 
 interface Group {
     study_id: string;
@@ -42,12 +43,8 @@ const GroupsPage = () => {
 
     return (
         <>
-            <div className="flex flex-col justify-center border-b gap-4">
-                <div className=" gap-4 sm:gap-8 flex pb-2 border-b-[2px] border-gray-300">
-                    {['전체', '모집 중', '모집 완료'].map(label => (
-                        <span key={label} className="cursor-pointer hover:font-bold">{label}</span>
-                    ))}
-                </div>
+            <div className="flex flex-col justify-center border-b">
+                <CardFilter />
                 <CardSearch getCardResults={(results)=>setGroups(results)}/>
             </div>
             <ul>
