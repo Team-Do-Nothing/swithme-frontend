@@ -1,0 +1,11 @@
+{
+  "studyId": 1,
+  "categoryId": 1,
+  "memberId": 1,
+  "title": "리액트 공부 스터디",
+  "studyType": "OFF",
+  "numberOfMembers": 50,
+  "regionCode": 110110,
+  "studyInfo": "스터디 모집합니당",
+  "studyStatus": "CURR"
+}
