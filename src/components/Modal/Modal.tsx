@@ -21,6 +21,7 @@ const Modal = ({
               {title}
             </p>
             <AiOutlineClose
+              className="cursor-pointer"
               onClick={() => {
                 dispatch(setModal("none"));
               }}
