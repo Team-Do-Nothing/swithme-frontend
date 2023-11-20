@@ -37,30 +37,7 @@ const Card: React.FC<CardProps> = ({
                                        }
                                    }) => {
     return (
-        // <article className="p-4 w-full">
-        //     <div className="bg-white shadow-2xl rounded-lg p-4 md:p-10 relative w-full text-center lg:text-left">
-        //         <header className="flex flex-col lg:flex-row justify-center lg:justify-between items-center pt-4">
-        //             <div className="flex justify-start items-center gap-3 mb-4 flex-1">
-        //                 <span className={`flex items-center ${getStatusBg(study_status)} text-white px-4 py-1 rounded-full font-semibold`}>
-        //                     {getStatusLabel(study_status)}
-        //                 </span>
-        //                 <h1 className="font-bold text-lg md:text-xl">{title}</h1>
-        //             </div>
-        //             <div className="flex flex-wrap justify-center lg:justify-end gap-3 md:gap-4 flex-1">
-        //                 <span className="text-center whitespace-nowrap md:text-base bg-blue-500 text-gray-50 rounded-xl p-0.5 md:p-1">{region_name}</span>
-        //                 <span className="text-center whitespace-nowrap md:text-base bg-orange-500 text-gray-50 rounded-xl p-0.5 md:p-1">{category_name}</span>
-        //                 <span className="text-center whitespace-nowrap md:text-base bg-purple-500 text-gray-50 rounded-xl p-0.5 md:p-1">{number_of_members}명</span>
-        //             </div>
-        //         </header>
-        //         <main className="mt-4 mb-2">
-        //             <p className="text-gray-700">{study_info}</p>
-        //         </main>
-        //         <footer>
-        //             <span className="text-gray-600">작성자: <strong>{member_name}</strong></span>
-        //         </footer>
-        //     </div>
-        // </article>
-        <div className="flex flex-col items-start p-[10px] relative border-b [border-bottem-style:solid] border-[#999999]">
+        <div className="flex flex-col items-start p-[10px] relative border-b [border-bottem-style:solid] border-[#999999] hover:bg-gray-200">
             <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
                 <div className="inline-flex gap-[10px] px-[10px] py-[5px] items-center relative flex-[0_0_auto]">
                     <div className="inline-flex flex-col justify-center p-[10px] bg-variable-collection-primary rounded-[20px] overflow-hidden items-center relative flex-[0_0_auto]">
@@ -69,7 +46,7 @@ const Card: React.FC<CardProps> = ({
                         </div>
                     </div>
                     <p className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[22px] tracking-[0] leading-[24px] whitespace-nowrap">
-                        리액트 같이 공부하실 분 모십니다.
+                        {title}
                     </p>
                 </div>
                 <div className="inline-flex items-center gap-[10px] relative flex-[0_0_auto] rounded-[20px] overflow-hidden">
