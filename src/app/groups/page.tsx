@@ -1,10 +1,12 @@
 'use client';
+
 import React, {useEffect, useState} from 'react';
-import FilterButton from "@/components/FilterButton";
-import CardList from "@/components/CardList";
+
 import LoadingPage from "../loading";
 import CardSearch from "@/components/CardSearch";
 import CardPagination from "@/components/CardPagination";
+import Link from "next/link";
+import Card from "@/components/Card";
 
 interface Group {
     study_id: string;
@@ -46,25 +48,17 @@ const GroupsPage = () => {
                         <span key={label} className="cursor-pointer hover:font-bold">{label}</span>
                     ))}
                 </div>
-                <div className="flex mt-4">
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-between w-full">
-                        <div className="flex items-center gap-2 flex-grow">
-                            <span className="font-bold text-black-600 w-16 whitespace-nowrap">분야</span>
-                            {['대분류', '소분류'].map(label => (
-                                <FilterButton key={label}>{label}</FilterButton>
-                            ))}
-                        </div>
-                        <div className="flex items-center gap-2 mt-2 sm:mt-0 flex-grow">
-                            <span className="font-bold text-black-600 w-16 whitespace-nowrap">위치</span>
-                            {['구', '동'].map(label => (
-                                <FilterButton key={label}>{label}</FilterButton>
-                            ))}
-                        </div>
-                    </div>
-                </div>
                 <CardSearch getCardResults={(results)=>setGroups(results)}/>
             </div>
-            <CardList groups={groups}/>
+            <ul>
+                {groups.map((group)=>(
+                    <li key={group.study_id}>
+                        <Link href={`/groups/${group.study_id}`}>
+                            <Card params={group} />
+                        </Link>
+                    </li>
+                ))}
+            </ul>
             <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
         </>
     );
