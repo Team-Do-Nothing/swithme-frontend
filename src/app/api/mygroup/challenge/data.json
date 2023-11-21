@@ -8,8 +8,9 @@
     "endDate" : "2023-11-30",
     "challengeFee" : 20000,
     "checkFormat" : "매일매일 게시판에 글 올리기",
-    "challengeStatus" : "DAILY",
-    "challengeFeeAll" : 200000
+    "challengeState" : "DAILY",
+    "challengeFeeAll" : 200000,
+    "dateCreated": "2023-10-01"
   }, {
     "challengeId" : 1,
     "studyId" : 1,
@@ -19,8 +20,9 @@
     "endDate" : "2023-11-30",
     "challengeFee" : 20000,
     "checkFormat" : "매일매일 게시판에 글 올리기",
-    "challengeStatus" : "SPECIAL",
-    "challengeFeeAll" : 200000
+    "challengeState" : "SPECIAL",
+    "challengeFeeAll" : 200000,
+    "dateCreated": "2023-10-01"
   }, {
     "challengeId" : 2,
     "studyId" : 1,
@@ -30,7 +32,8 @@
     "endDate" : "2023-11-30",
     "challengeFee" : 20000,
     "checkFormat" : "매일매일 게시판에 글 올리기",
-    "challengeStatus" : "DAILY",
-    "challengeFeeAll" : 200000
+    "challengeState" : "DAILY",
+    "challengeFeeAll" : 200000,
+    "dateCreated": "2023-10-01"
   }
 ]
