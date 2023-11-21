@@ -38,7 +38,7 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     return (
         <form onSubmit={handleSubmit} className="flex gap-[10px] px-[10px] py-[10px] relative border-b-2 [border-bottom-style:solid] border-[#999999]">
             <div className="flex flex-col items-center justify-center gap-[10px] relative flex-1 grow">
-                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-2 ${isFocused ? 'border-black' : 'border-[#999999]'} hover:border-[#000000]`}>
+                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-[3px] ${isFocused ? 'border-black' : 'border-[#999999]'} hover:border-[#000000]`}>
                     <BiSearch className="absolute left-[10px] w-[24px] h-[24px]" />
                     <input
                         type="text"
@@ -47,7 +47,7 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         placeholder="관심 스터디를 검색해보세요!"
-                        className="flex-1 pl-[40px] pr-[10px] py-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px] w-full tracking-[0] leading-[24px] whitespace-nowrap rounded-[12px] outline-none"
+                        className="flex-1 pl-[40px] pr-[10px] py-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#121212] text-[18px] w-full tracking-[0] leading-[24px] whitespace-nowrap rounded-[12px] outline-none"
                     />
                 </div>
             </div>

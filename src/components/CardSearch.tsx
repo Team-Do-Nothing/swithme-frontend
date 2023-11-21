@@ -17,6 +17,25 @@ interface Group {
 interface CardSearchProps {
     getCardResults: (group: Group[]) => void;
 }
+
+const majorCategories: {[key: string]: string[]} = {
+    'IT': ['개발', '보안', '네트워킹'],
+    '문화': ['음악', '영화', '미술'],
+    '예술': ['회화', '조각', '공연'],
+};
+
+const locationCategories: {[key: string]: string[]} = {
+    '강남구': ['강남동', '역삼동', '청담동'],
+    '종로구': ['종로1가', '종로2가', '종로3가'],
+    '마포구': ['망원동', '상암동', '성산동']
+};
+
+const COLORS = {
+    default: '#bbbbbb',
+    selected: '#000000',
+    borderColor: '#999999'
+};
+
 const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     const [query, setQuery] = useState('');
 
@@ -33,16 +52,15 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
 
-    const majorCategories: {[key: string]: string[]} = {
-        'IT': ['개발', '보안', '네트워킹'],
-        '문화': ['음악', '영화', '미술'],
-        '예술': ['회화', '조각', '공연'],
+    const getSelectStyle = (selectedValue: string) => {
+        return {
+            borderColor: selectedValue ? COLORS.selected : COLORS.default,
+            color: selectedValue ? COLORS.selected : COLORS.default
+        };
     };
 
-    const locationCategories: {[key: string]: string[]} = {
-        '강남구': ['강남동', '역삼동', '청담동'],
-        '종로구': ['종로1가', '종로2가', '종로3가'],
-        '마포구': ['망원동', '상암동', '성산동']
+    const isSelected = (selectedValue: string) => {
+        return selectedValue ? COLORS.selected : COLORS.default;
     };
 
     useEffect(() => {
@@ -51,15 +69,17 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
         } else {
             setMinorCategories([]);
         }
-        setMinorCategory('');
+        setMinorCategory(''); // 대분류 변경 시 소분류 초기화
+    }, [majorCategory]);
 
+    useEffect(() => {
         if (district in locationCategories) {
             setNeighborhoods(locationCategories[district]);
         } else {
             setNeighborhoods([]);
         }
-        setNeighborhood('');
-    }, [majorCategory, district]);
+        setNeighborhood(''); // 구 변경 시 동네 초기화
+    }, [district]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -90,13 +110,13 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
                     <div className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[18px] tracking-[0] leading-[24px] whitespace-nowrap">
                         분야
                     </div>
-                    <select value={majorCategory} onChange={(e) => setMajorCategory(e.target.value)} className="flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px] relative flex-1 grow rounded-[13px] overflow-hidden border-2 border-solid border-[#999999] hover:border-[#000000]">
+                    <select value={majorCategory} onChange={(e) => setMajorCategory(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${majorCategory === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(majorCategory)}] border-[3px] hover:border-[#000000]`}>
                         <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">대분류 선택</option>
                         {Object.keys(majorCategories).map(key => (
                             <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={key} value={key}>{key}</option>
                         ))}
                     </select>
-                    <select value={minorCategory} onChange={(e) => setMinorCategory(e.target.value)} className="flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px] relative flex-1 grow rounded-[13px] overflow-hidden border-2 border-solid border-[#999999] hover:border-[#000000]" disabled={minorCategories.length === 0}>
+                    <select value={minorCategory} onChange={(e) => setMinorCategory(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${minorCategory === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(minorCategory)}] border-[3px] ${minorCategories.length > 0 && 'hover:border-[#000000]'}`} disabled={minorCategories.length === 0}>
                         <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">소분류 선택</option>
                         {minorCategories.map(category => (
                             <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={category} value={category}>{category}</option>
@@ -105,20 +125,20 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
                     <div className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[18px] tracking-[0] leading-[24px] whitespace-nowrap">
                         위치
                     </div>
-                    <select value={district} onChange={(e) => setDistrict(e.target.value)} className="flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px] relative flex-1 grow rounded-[13px] overflow-hidden border-2 border-solid border-[#999999] hover:border-[#000000]">
+                    <select value={district} onChange={(e) => setDistrict(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${district === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(district)}] border-[3px] hover:border-[#000000]`}>
                         <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">구 선택</option>
                         {Object.keys(locationCategories).map(key => (
                             <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={key} value={key}>{key}</option>
                         ))}
                     </select>
-                    <select value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} className="flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px] relative flex-1 grow rounded-[13px] overflow-hidden border-2 border-solid border-[#999999] hover:border-[#000000]" disabled={neighborhoods.length === 0}>
+                    <select value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${neighborhood === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(neighborhood)}] border-[3px] ${neighborhoods.length > 0 && 'hover:border-[#000000]'}`} disabled={neighborhoods.length === 0}>
                         <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">동 선택</option>
                         {neighborhoods.map(n => (
                             <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={n} value={n}>{n}</option>
                         ))}
                     </select>
                 </div>
-                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-2 ${isFocused ? 'border-black' : 'border-[#999999]'} hover:border-[#000000]`}>
+                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-[3px] ${isFocused ? 'border-black' : 'border-[#999999]'} hover:border-[#000000]`}>
                     <BiSearch className="absolute left-[10px] w-[24px] h-[24px]" />
                     <input
                         type="text"
