@@ -29,12 +29,12 @@ const CardPagination: React.FC<CardPaginationProps> = ({ currentPage, setCurrent
     return (
         <div className="mt-4 flex justify-center">
             {currentPage > 1 && (
-                <button onClick={handlePrevPage} className="hover:font-bold"><IoIosArrowBack /></button>
+                <button onClick={handlePrevPage} className="hover:font-bold"><IoIosArrowBack className="!relative !w-[24px] !h-[24px]" /></button>
             )}
             {pageNumbers.map(number => (
                 <span
                     key={number}
-                    className={`mx-1 ${number === currentPage ? 'font-bold' : ''} hover:font-bold cursor-pointer`}
+                    className={`mx-2 ${number === currentPage ? 'font-bold' : ''} hover:font-bold text-[24px] cursor-pointer`}
                     onClick={() => setCurrentPage(number)}
                 >
                         {number}
@@ -42,7 +42,7 @@ const CardPagination: React.FC<CardPaginationProps> = ({ currentPage, setCurrent
             ))}
 
             {currentPage < maxPage && (
-                <button onClick={handleNextPage} className="hover:font-bold"><IoIosArrowForward /></button>
+                <button onClick={handleNextPage} className="hover:font-bold"><IoIosArrowForward className="!relative !w-[24px] !h-[24px]" /></button>
             )}
         </div>
     )

@@ -49,7 +49,7 @@ const BoardPage = () => {
                     <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
                         <ul className="list-none w-full p-0 m-0">
                             {boards.map((board) => (
-                                <li key={board.noticeId} className="mb-4 last:mb-0">
+                                <li key={board.noticeId} className="last:mb-0">
                                     <Link href={`${pathname}/${board.noticeId}`}>
                                         <NoticeCard params={board}/>
                                     </Link>
@@ -57,8 +57,8 @@ const BoardPage = () => {
                             ))}
                         </ul>
                         <div className="flex items-center justify-between p-[10px] relative self-stretch w-full flex-[0_0_auto]">
-                            <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage}
-                                            maxPage={maxPage}/>
+                            <div></div>
+                            <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
                             <Link href={`/mygroup/${groupId}/write`}>
                                 <button className="inline-flex flex-col items-center justify-center gap-[10px] px-[10px] py-[5px] relative bg-variable-collection-primary rounded-[12px] overflow-hidden all-[unset] box-border">
                                     <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-white text-[14px] tracking-[0] leading-[24px] whitespace-nowrap">
