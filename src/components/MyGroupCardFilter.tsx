@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-const CardFilter: React.FC = () => {
+const MyGroupCardFilter: React.FC = () => {
     const FILTER_OPTIONS = {
         ALL: '전체',
         RECRUITING: '모집 중',
         RECRUITED: '모집 완료',
+        COMPLETED: '진행 종료'
     };
 
     const [selected, setSelected] = useState<string>(FILTER_OPTIONS.ALL);
@@ -39,4 +40,4 @@ const CardFilter: React.FC = () => {
     );
 };
 
-export default CardFilter;
+export default MyGroupCardFilter;
