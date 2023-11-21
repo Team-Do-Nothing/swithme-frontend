@@ -40,9 +40,9 @@ const Card: React.FC<CardProps> = ({
         <div className="flex flex-col items-start p-[10px] relative border-b [border-bottem-style:solid] border-[#999999] hover:bg-gray-200">
             <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
                 <div className="inline-flex gap-[10px] px-[10px] py-[5px] items-center relative flex-[0_0_auto]">
-                    <div className="inline-flex flex-col justify-center p-[10px] bg-variable-collection-primary rounded-[20px] overflow-hidden items-center relative flex-[0_0_auto]">
+                    <div className={`inline-flex flex-col justify-center p-[10px] ${getStatusBg(study_status)} rounded-[20px] overflow-hidden items-center relative flex-[0_0_auto]`}>
                         <div className="relative w-fit mt-[-1px] [font-family:'Inter-SemiBold',Helvetica] font-semiblod text-white text-[20px] tracking-[0] leading-[24px] whitespace-nowrap">
-                            모집중
+                            {getStatusLabel(study_status)}
                         </div>
                     </div>
                     <p className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[22px] tracking-[0] leading-[24px] whitespace-nowrap">
