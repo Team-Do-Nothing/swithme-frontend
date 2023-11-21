@@ -138,7 +138,7 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
                         ))}
                     </select>
                 </div>
-                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-[3px] ${isFocused ? 'border-black' : 'border-[#999999]'} hover:border-[#000000]`}>
+                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-[3px] ${isFocused ? 'border-black' : 'border-[#bbbbbb]'} hover:border-[#000000]`}>
                     <BiSearch className="absolute left-[10px] w-[24px] h-[24px]" />
                     <input
                         type="text"
