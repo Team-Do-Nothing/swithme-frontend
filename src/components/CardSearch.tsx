@@ -1,5 +1,7 @@
 'use client';
-import React, {useState} from 'react';
+
+import React, {useState, useEffect} from 'react';
+import {BiSearch, BiRefresh} from "react-icons/bi";
 
 interface Group {
     study_id: string;
@@ -15,8 +17,69 @@ interface Group {
 interface CardSearchProps {
     getCardResults: (group: Group[]) => void;
 }
+
+const majorCategories: {[key: string]: string[]} = {
+    'IT': ['개발', '보안', '네트워킹'],
+    '문화': ['음악', '영화', '미술'],
+    '예술': ['회화', '조각', '공연'],
+};
+
+const locationCategories: {[key: string]: string[]} = {
+    '강남구': ['강남동', '역삼동', '청담동'],
+    '종로구': ['종로1가', '종로2가', '종로3가'],
+    '마포구': ['망원동', '상암동', '성산동']
+};
+
+const COLORS = {
+    default: '#bbbbbb',
+    selected: '#000000',
+    borderColor: '#999999'
+};
+
 const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
     const [query, setQuery] = useState('');
+
+    const [majorCategory, setMajorCategory] = useState('');
+    const [minorCategory, setMinorCategory] = useState('');
+    const [minorCategories, setMinorCategories] = useState<string[]>([]);
+
+    const [district, setDistrict] = useState('');
+    const [neighborhood, setNeighborhood] = useState('');
+    const [neighborhoods, setNeighborhoods] = useState<string[]>([]);
+
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+
+    const getSelectStyle = (selectedValue: string) => {
+        return {
+            borderColor: selectedValue ? COLORS.selected : COLORS.default,
+            color: selectedValue ? COLORS.selected : COLORS.default
+        };
+    };
+
+    const isSelected = (selectedValue: string) => {
+        return selectedValue ? COLORS.selected : COLORS.default;
+    };
+
+    useEffect(() => {
+        if (majorCategory in majorCategories) {
+            setMinorCategories(majorCategories[majorCategory]);
+        } else {
+            setMinorCategories([]);
+        }
+        setMinorCategory(''); // 대분류 변경 시 소분류 초기화
+    }, [majorCategory]);
+
+    useEffect(() => {
+        if (district in locationCategories) {
+            setNeighborhoods(locationCategories[district]);
+        } else {
+            setNeighborhoods([]);
+        }
+        setNeighborhood(''); // 구 변경 시 동네 초기화
+    }, [district]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,93 +88,84 @@ const CardSearch: React.FC<CardSearchProps> = ({getCardResults}) => {
             `/api/groups/search?query=${query}`
         );
         const groups = await res.json();
-        console.log(groups);
         getCardResults(groups);
     }
 
+    const handleReset = async () => {
+        setQuery('');
+        setMajorCategory('');
+        setMinorCategory('');
+        setDistrict('');
+        setNeighborhood('');
+
+        const res = await fetch(`/api/groups/search?query=`);
+        const groups = await res.json();
+        getCardResults(groups);
+    };
+
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="flex mt-4">
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-between w-full">
-                    <div className="flex items-center gap-2 flex-grow">
-                        <span className="font-bold text-black-600 w-16 whitespace-nowrap">분야</span>
-                        {['대분류', '소분류'].map(label => (
-                            <button
-                                key={label}
-                                className="
-                                        flex-grow
-                                        py-1
-                                        sm:py-2
-                                        lg:py-3
-                                        px-2
-                                        sm:px-4
-                                        lg:px-6
-                                        border border-gray-400
-                                        rounded-3xl
-                                        text-gray-500
-                                        sm:text-base
-                                        lg:text-lg
-                                        font-semibold
-                                        bg-gray-100
-                                        hover:bg-gray-400
-                                        w-full
-                                        sm:max-w-32
-                                        md:max-w-48
-                                        lg:max-w-72
-                                        transition">
-                                {label}
-                            </button>
-                        ))}
+        <form onSubmit={handleSubmit} className="flex items-start gap-[10px] px-[10px] py-[10px] relative border-b-2 [border-bottom-style:solid] border-[#999999]">
+            <div className="flex flex-col items-start justify-center gap-[10px] relative flex-1 grow">
+                <div className="flex items-center justify-center gap-[10px] p-[10px] relative self-stretch w-full flex-[0_0_auto]">
+                    <div className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[18px] tracking-[0] leading-[24px] whitespace-nowrap">
+                        분야
                     </div>
-                    <div className="flex items-center gap-2 mt-2 sm:mt-0 flex-grow">
-                        <span className="font-bold text-black-600 w-16 whitespace-nowrap">위치</span>
-                        {['구', '동'].map(label => (
-                            <button
-                                key={label}
-                                className="
-                                        flex-grow
-                                        py-1
-                                        sm:py-2
-                                        lg:py-3
-                                        px-2
-                                        sm:px-4
-                                        lg:px-6
-                                        border border-gray-400
-                                        rounded-3xl
-                                        text-gray-500
-                                        sm:text-base
-                                        lg:text-lg
-                                        font-semibold
-                                        bg-gray-100
-                                        hover:bg-gray-400
-                                        w-full
-                                        sm:max-w-32
-                                        md:max-w-48
-                                        lg:max-w-72
-                                        transition">
-                                {label}
-                            </button>
+                    <select value={majorCategory} onChange={(e) => setMajorCategory(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${majorCategory === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(majorCategory)}] border-[3px] hover:border-[#000000]`}>
+                        <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">대분류 선택</option>
+                        {Object.keys(majorCategories).map(key => (
+                            <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={key} value={key}>{key}</option>
                         ))}
+                    </select>
+                    <select value={minorCategory} onChange={(e) => setMinorCategory(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${minorCategory === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(minorCategory)}] border-[3px] ${minorCategories.length > 0 && 'hover:border-[#000000]'}`} disabled={minorCategories.length === 0}>
+                        <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">소분류 선택</option>
+                        {minorCategories.map(category => (
+                            <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={category} value={category}>{category}</option>
+                        ))}
+                    </select>
+                    <div className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[18px] tracking-[0] leading-[24px] whitespace-nowrap">
+                        위치
                     </div>
+                    <select value={district} onChange={(e) => setDistrict(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${district === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(district)}] border-[3px] hover:border-[#000000]`}>
+                        <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">구 선택</option>
+                        {Object.keys(locationCategories).map(key => (
+                            <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={key} value={key}>{key}</option>
+                        ))}
+                    </select>
+                    <select value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} className={`flex flex-col items-center justify-center p-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[18px] text-[${neighborhood === "" && "#999999"}] relative flex-1 grow rounded-[13px] overflow-hidden border-[${isSelected(neighborhood)}] border-[3px] ${neighborhoods.length > 0 && 'hover:border-[#000000]'}`} disabled={neighborhoods.length === 0}>
+                        <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#999999] text-[18px]" value="">동 선택</option>
+                        {neighborhoods.map(n => (
+                            <option className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px]" key={n} value={n}>{n}</option>
+                        ))}
+                    </select>
                 </div>
+                <div className={`flex items-center justify-center relative self-stretch w-full rounded-[12px] overflow-hidden border-[3px] ${isFocused ? 'border-black' : 'border-[#bbbbbb]'} hover:border-[#000000]`}>
+                    <BiSearch className="absolute left-[10px] w-[24px] h-[24px]" />
+                    <input
+                        type="text"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}
+                        placeholder="관심 스터디를 검색해보세요!"
+                        className="flex-1 pl-[40px] pr-[10px] py-[10px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[#000000] text-[18px] w-full tracking-[0] leading-[24px] whitespace-nowrap rounded-[12px] outline-none"
+                    />
+                </div>
+
             </div>
-            <div className="flex flex-col sm:flex-row w-full items-center gap-2">
-                <input type="text"
-                       placeholder="관심 스터디를 검색해보세요!"
-                       className="p-2 rounded border shadow-md flex-8 w-full"
-                       value={query}
-                       onChange={(e) => setQuery(e.target.value)}
-                />
-                <div className="flex gap-3">
-                    <button
-                        className="bg-green-500 hover:bg-green-600 rounded-xl text-gray-50 py-1 sm:py-2 lg:py-3 px-2 sm:px-4 lg:px-8 border border-gray-400 font-semibold transition w-full md:w-auto whitespace-nowrap">
+            <div className="flex flex-col w-[150px] items-center justify-center gap-[10px] p-[10px] relative self-stretch">
+                <button type="submit" className="inline-flex flex-col items-center justify-center px-[30px] py-[16px] relative bg-green-500 rounded-[12px] overflow-hidden all-[unset] box-border cursor-pointer shadow-[0px_4px_4px_#00000040] hover:bg-green-600">
+                    <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-white text-[24px] tracking-[0] leading-[24px] whitespace-nowrap">
                         검색
-                    </button>
-                    <button
-                        className="bg-gray-500 hover:bg-green-600 rounded-xl text-gray-50 py-1 sm:py-2 lg:py-3 px-2 sm:px-4 lg:px-6 border border-gray-400 font-semibold transition w-full md:w-auto whitespace-nowrap">
+                    </div>
+                </button>
+                <button
+                    className="inline-flex items-center justify-center p-[10px] relative flex-[0_0_auto] rounded-[12px] overflow-hidden border border-solid border-[#d9d9d9] shadow-[0px_4px_4px_#00000040] hover:bg-gray-200"
+                    onClick={handleReset}>
+                    <BiRefresh className="relative w-[24px] h-[24px] overflow-hidden" />
+                    <div className="mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-black text-[20px] relative w-fit tracking-[0] leading-[24px] whitespace-nowrap">
                         초기화
-                    </button>
-                </div>
+                    </div>
+                </button>
             </div>
         </form>
     );

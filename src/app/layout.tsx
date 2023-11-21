@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={font.className}>
         <ReduxProvider>
           <Header />
-          <div className="px-0 lg:px-40 2xl:px-80 py-24">{children}</div>
+          <div className="px-0 lg:px-40 2xl:px-80 py-8">{children}</div>
           <ModalProvider />
         </ReduxProvider>
       </body>

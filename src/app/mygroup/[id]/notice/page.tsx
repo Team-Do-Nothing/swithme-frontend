@@ -7,6 +7,7 @@ import LoadingPage from "@/app/loading";
 import CardPagination from "@/components/CardPagination";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import WriteButton from "@/components/MyGroup/WriteButton";
 
 interface NoticesProps {
     noticeId: number;
@@ -49,23 +50,19 @@ const NoticePage = () => {
                     <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
                         <ul className="list-none w-full p-0 m-0">
                             {notices.map((notice) => (
-                                <li key={notice.noticeId} className="mb-4 last:mb-0">
+                                <li key={notice.noticeId} className="last:mb-0">
                                     <Link href={`${pathname}/${notice.noticeId}`}>
                                         <NoticeCard params={notice}/>
                                     </Link>
                                 </li>
                             ))}
                         </ul>
-                        <div
-                            className="flex items-center justify-between p-[10px] relative self-stretch w-full flex-[0_0_auto]">
+                        <div className="flex items-center justify-between p-[10px] relative self-stretch w-full flex-[0_0_auto]">
+                            <div></div>
                             <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage}
                                             maxPage={maxPage}/>
                             <Link href={`/mygroup/${groupId}/write`}>
-                                <button className="inline-flex flex-col items-center justify-center gap-[10px] px-[10px] py-[5px] relative bg-variable-collection-primary rounded-[12px] overflow-hidden all-[unset] box-border">
-                                    <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-white text-[14px] tracking-[0] leading-[24px] whitespace-nowrap">
-                                        글쓰기
-                                    </div>
-                                </button>
+                                <WriteButton />
                             </Link>
                         </div>
                     </div>

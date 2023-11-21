@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from "next/navigation";
@@ -24,7 +25,7 @@ const NavLink = ({ href, label }: NavLinkProps) => {
 
     return (
         <Link href={`/mygroup/${groupId}${href}`}>
-            <div className={`flex-1 flex flex-col items-center justify-center gap-[10px] px-[30px] py-[15px] relative [border-bottom-style:solid] border-variable-collection-secondary ${isActive ? 'z-[4] bg-variable-collection-primary text-white' : 'text-black'}`}>
+            <div className={`flex-1 flex flex-col items-center justify-center py-[15px] relative ${isActive ? 'z-[4] bg-variable-collection-primary text-white' : 'text-black'} hover:bg-green-600 hover:text-white`}>
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[22px] tracking-[0] leading-[24px] whitespace-nowrap">
                     {label}
                 </div>
@@ -35,7 +36,7 @@ const NavLink = ({ href, label }: NavLinkProps) => {
 
 const MyGroupNavBar = () => {
     return (
-        <div className="flex items-start justify-between relative self-stretch w-full flex-[0_0_auto] rounded-[24px] overflow-hidden border-[3px] border-solid border-variable-collection-primary">
+        <div className="flex items-start justify-between relative self-stretch w-full flex-[0_0_auto] rounded-[24px] overflow-hidden border-[2px] border-green-600">
             {navItems.map(item => (
                 <div key={item.label} className="flex-1">
                     <NavLink {...item} />

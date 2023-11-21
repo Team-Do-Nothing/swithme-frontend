@@ -5,6 +5,9 @@ import React, {useEffect, useState} from 'react';
 import LoadingPage from "@/app/loading";
 import Link from "next/link";
 import Card from "@/components/Card";
+import MyGroupCardFilter from "@/components/MyGroupCardFilter";
+import MyGroupCardSearch from "@/components/MyGroupCardSearch";
+import CardPagination from "@/components/CardPagination";
 
 interface Group {
     study_id: string;
@@ -20,6 +23,8 @@ interface Group {
 const MyGroupPage = () => {
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const maxPage = 20;
 
     useEffect(()=>{
         const fetchGroups = async () => {
@@ -38,6 +43,10 @@ const MyGroupPage = () => {
 
     return (
         <>
+            <div className="flex flex-col justify-center border-b">
+                <MyGroupCardFilter />
+                <MyGroupCardSearch getCardResults={(results)=>setGroups(results)}/>
+            </div>
             <ul>
                 {groups.map((group)=>(
                     <li key={group.study_id}>
@@ -47,6 +56,7 @@ const MyGroupPage = () => {
                     </li>
                 ))}
             </ul>
+            <CardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} maxPage={maxPage}/>
         </>
     );
 };
