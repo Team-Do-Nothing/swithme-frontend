@@ -2,8 +2,6 @@
 
 import React, {useEffect, useState} from 'react';
 import MyGroupHeader from "@/components/MyGroup/MyGroupHeader";
-import Post from "@/components/Groups/Post";
-import {BiCaretLeft, BiCaretRight} from "react-icons/bi";
 import {usePathname} from "next/navigation";
 import LoadingPage from "@/app/loading";
 import Link from "next/link";
