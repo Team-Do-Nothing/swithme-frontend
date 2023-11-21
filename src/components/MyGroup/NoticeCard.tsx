@@ -14,7 +14,7 @@ interface NoticeCardProps {
 
 const NoticeCard = ({params:{title, content, writer, likes, comments}}:NoticeCardProps) => {
     return (
-        <div className="flex flex-col items-start p-[10px] relative border-b [border-bottom-style:solid] border-[#999999] w-full">
+        <div className="flex flex-col items-start p-[10px] relative border-b [border-bottom-style:solid] border-[#999999] w-full hover:bg-gray-200">
             <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
                 <div className="inline-flex gap-[10px] px-[5px] py-[20px] items-center relative flex-[0_0_auto]">
                     <p className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-black text-[22px] tracking-[0] leading-[24px] whitespace-nowrap">
