@@ -10,7 +10,7 @@ const modalSlice = createSlice({
       state.current = action.payload
     },
     clearModal: (state) => {
-      state.current = "none";
+      state.current = "createChallenge";
     }
   },
 })
