@@ -2,6 +2,7 @@
 
 import { useAppSelector } from "@/redux/store";
 import InviteMemberModal from "./Modal/InviteMemberModal";
+import CreateChallengeModal from "./Modal/CreateChallengeModal";
 
 const ModalProvider = () => {
   const modal = useAppSelector((state) => state.modal.current);
@@ -13,6 +14,7 @@ const ModalProvider = () => {
       }`}
     >
       {modal === "inviteMember" && <InviteMemberModal />}
+      {modal === "createChallenge" && <CreateChallengeModal />}
     </div>
   );
 };
